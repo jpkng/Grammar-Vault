@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grammar Vault — My Progress</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--ink:#2D3047;--soft:#5C6B8A;--edge:#2D3047;--green:#4CD964;--greenD:#2FAE49;--purple:#7C5CFF;--purpleD:#5B3FE0;--orange:#FF9F45;--red:#E14F4F;--gold:#FFC83D;--line:#D6DCE6;--bg1:#BDE8FF;--bg2:#E9F7FF}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;font-family:"Fredoka",system-ui,sans-serif;color:var(--ink);background:linear-gradient(180deg,var(--bg1),var(--bg2));padding:20px 14px 40px}
+  .wrap{max-width:980px;margin:0 auto}
+  .card{background:#fff;border:5px solid var(--edge);border-radius:24px;padding:20px 22px;box-shadow:0 7px 0 rgba(45,48,71,.22);margin-bottom:18px}
+  h1,h2{font-family:"Baloo 2",sans-serif;margin:0}
+  h1{font-size:2.2rem;color:var(--purpleD);line-height:1.1}
+  h2{font-size:1.5rem;margin-bottom:10px}
+  .muted{color:var(--soft)}
+  .top{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .owl{font-size:3.4rem;line-height:1}
+  .top .grow{flex:1;min-width:200px}
+  .btns{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{font:700 1rem "Fredoka",sans-serif;padding:10px 18px;border-radius:14px;border:3px solid var(--edge);background:var(--green);color:#fff;cursor:pointer;text-decoration:none;box-shadow:0 4px 0 var(--greenD);text-shadow:0 2px 0 rgba(0,0,0,.18)}
+  .btn.alt{background:#fff;color:var(--ink);box-shadow:0 4px 0 #AEB9CC;text-shadow:none}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+  .tile{border:3px solid var(--line);border-radius:18px;padding:12px 10px;text-align:center;background:#F8FBFF}
+  .tile .big{font:800 2rem "Baloo 2",sans-serif;color:var(--purpleD);line-height:1.1}
+  .tile .lab{font-size:.92rem;color:var(--soft);font-weight:600}
+  .goal{background:linear-gradient(90deg,#FFF6D6,#FFFBEA);border-color:var(--gold)}
+  .goal .t{font:800 1.35rem "Baloo 2",sans-serif}
+  .levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+  .lv{border:3px solid var(--line);border-radius:18px;padding:12px;background:#F8FBFF;text-align:center}
+  .lv.done{border-color:var(--green);background:#EAFBEF}.lv.current{border-color:var(--purple);background:#F1EDFF}
+  .lv .n{font:800 .9rem "Fredoka",sans-serif;color:var(--soft)}
+  .lv .nm{font:700 1.05rem "Fredoka",sans-serif;margin:2px 0 6px;min-height:2.6em}
+  .stars{font-size:1.6rem;letter-spacing:3px;color:#E8A400}.stars .off{color:#D2D8E3}
+  .lv .sm{font-size:.88rem;color:var(--soft)}
+  .row{display:grid;grid-template-columns:190px 1fr 150px;gap:12px;align-items:center;margin:10px 0}
+  .bar{height:20px;background:#E9EEF6;border-radius:999px;overflow:hidden}.bar i{display:block;height:100%;border-radius:999px}
+  .tag{font-weight:700;font-size:.9rem;padding:2px 10px;border-radius:999px;display:inline-block}
+  .t-super{background:#D9F5E1;color:#1E7A3C}.t-great{background:#EAF6CF;color:#587A12}.t-get{background:#FFE9C7;color:#9A5B00}.t-keep{background:#FAD9D7;color:#B5352F}.t-new{background:#EEF1F5;color:#5C6B8A}
+  .days{display:flex;gap:8px;align-items:flex-end;height:170px}
+  .day{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:.8rem;color:var(--soft);text-align:center}
+  .day .col{width:100%;max-width:60px;border-radius:10px 10px 0 0;min-height:4px}
+  .day b{color:var(--ink);font-size:.9rem}
+  .badges{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+  .badge{display:flex;gap:10px;align-items:center;border:3px solid var(--line);border-radius:16px;padding:10px;background:#F8FBFF}
+  .badge .ic{font-size:2rem;width:46px;text-align:center}
+  .badge.on{border-color:var(--gold);background:#FFF9E3}
+  .badge.off{opacity:.62}.badge.off .ic{filter:grayscale(1)}
+  .badge .tt{font-weight:700}.badge .ds{font-size:.85rem;color:var(--soft)}.badge .pg{font-size:.82rem;font-weight:700;color:var(--purpleD)}
+  .tip{background:#F1EDFF;border-color:var(--purple)}
+  ul.rev{margin:6px 0 0;padding-left:20px}ul.rev li{margin:6px 0}
+  .msg{text-align:center;padding:30px}
+  @media (max-width:700px){.row{grid-template-columns:1fr}h1{font-size:1.7rem}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><div class="card msg">Loading your progress…</div></div>
+<script>
+(function(){
+  const KEY='gv_student';
+  const app=document.getElementById('app');
+  const el=(tag,cls,text)=>{const e=document.createElement(tag); if(cls)e.className=cls; if(text!==undefined&&text!==null)e.textContent=text; return e;};
+  const add=(p,...k)=>{k.forEach(x=>x&&p.appendChild(x));return p;};
+  const colorFor=p=>p===null?'#C9D3E2':p>=90?'#2FAE49':p>=75?'#9ACD32':p>=50?'#FF9F45':'#E14F4F';
+  const tagFor={'Super!':'t-super','Great':'t-great','Getting there':'t-get','Keep practicing':'t-keep','Just starting':'t-new'};
+  let student=null;
+  try{ student=JSON.parse(localStorage.getItem(KEY)||'null'); }catch(e){}
+  if(!student||!student.student_no||!student.token){ location.replace('student.html'); return; }
+  function message(text,withLogin){
+    app.innerHTML='';
+    const c=el('div','card msg'); add(c,el('p',null,text));
+    const b=el('div','btns'); b.style.justifyContent='center';
+    if(withLogin){ const a=el('a','btn','Log in'); a.href='student.html'; b.appendChild(a); }
+    else { const r=el('button','btn','Try again'); r.onclick=load; b.appendChild(r); }
+    const g=el('a','btn alt','Back to the game'); g.href='index2.html'; b.appendChild(g);
+    c.appendChild(b); app.appendChild(c);
+  }
+  async function load(){
+    message('Loading your progress…',null);
+    app.querySelector('.btns').remove();
+    try{
+      const r=await fetch('student_api.php',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'progress',token:student.token})});
+      const d=await r.json();
+      if(d&&d.success&&d.progress&&d.progress.totals){ render(d.progress); return; }
+      if(d&&d.error==='not found'){ try{localStorage.removeItem(KEY);}catch(e){} message('Please log in again.',true); return; }
+      message('Something went wrong. Please try again.');
+    }catch(e){ message("Can't reach the game server. Ask your teacher to start the game, then try again."); }
+  }
+  function tile(big,lab){ const t=el('div','tile'); add(t,el('div','big',big),el('div','lab',lab)); return t; }
+  function starsEl(n){ const s=el('div','stars'); for(let i=1;i<=3;i++){ const x=el('span',i<=n?'':'off','★'); s.appendChild(x);} return s; }
+  function render(p){
+    app.innerHTML=''; const t=p.totals;
+    const top=el('div','card top'); add(top,el('div','owl','🦉'));
+    const g=el('div','grow'); add(g,el('h1',null,'Hi, '+p.first_name+'!'),
+      el('div','muted',(p.grade?'Grade '+p.grade+' · ':'')+p.student_no+(p.teacher?' · '+p.teacher:'')),
+      el('div','muted',t.answers?('Last played '+t.last+'.'):'You have not played yet. Let’s start!')); top.appendChild(g);
+    const b=el('div','btns'); const back=el('a','btn','▶ Play'); back.href='index2.html';
+    const rf=el('button','btn alt','↻ Refresh'); rf.onclick=load;
+    const lo=el('button','btn alt','Log out'); lo.onclick=()=>{try{localStorage.removeItem(KEY);}catch(e){} location.href='student.html';};
+    add(b,back,rf,lo); top.appendChild(b); app.appendChild(top);
+    const goal=el('div','card goal'); add(goal,el('div','muted','🎯 YOUR NEXT GOAL'),el('div','t',p.goal.title),el('div',null,p.goal.text)); app.appendChild(goal);
+    const sec=el('div','card'); add(sec,el('h2',null,'My numbers'));
+    const tiles=el('div','tiles');
+    add(tiles,tile(t.accuracy===null?'—':t.accuracy+'%','Answers right'),
+      tile(t.stars+' / '+t.maxStars,'Stars ⭐'),
+      tile(t.levelsDone+' / '+t.levelCount,'Levels finished'),
+      tile(String(t.answers),'Questions answered'),
+      tile(String(t.days),'Days played'),
+      tile(t.avgSec===null?'—':Math.round(t.avgSec)+' s','Average time (30 s limit)'));
+    sec.appendChild(tiles);
+    if(t.trend==='up') sec.appendChild(el('p',null,'📈 Your last 20 answers are better than the 20 before. Keep going!'));
+    else if(t.trend==='down') sec.appendChild(el('p','muted','Your last 20 answers were a little trickier. Take your time and read each question twice!'));
+    if(t.timeouts) sec.appendChild(el('p','muted','⏱ Time ran out '+t.timeouts+' time'+(t.timeouts===1?'':'s')+'. Try answering a bit faster when you know it!'));
+    app.appendChild(sec);
+    const lv=el('div','card'); add(lv,el('h2',null,'My levels'));
+    const lg=el('div','levels');
+    p.levels.forEach(l=>{
+      const c=el('div','lv '+l.status); add(c,el('div','n','LEVEL '+l.n),el('div','nm',l.name),starsEl(l.stars),
+        el('div','sm',l.status==='done'?'Finished!':l.status==='current'?(l.answers?'In progress':'Up next'):'Not started yet'),
+        el('div','sm',l.answers?(l.accuracy+'% right · '+l.answers+' answers'):'')); lg.appendChild(c);
+    });
+    lv.appendChild(lg); app.appendChild(lv);
+    const sk=el('div','card'); add(sk,el('h2',null,'My skills'));
+    p.skills.forEach(s=>{
+      const r=el('div','row'); const bar=el('div','bar'); const i=el('i'); i.style.width=(s.accuracy||0)+'%'; i.style.background=colorFor(s.answers>=5?s.accuracy:null); bar.appendChild(i);
+      const lab=el('div'); add(lab,el('span','tag '+(tagFor[s.label]||'t-new'),s.label),el('span','muted',' '+(s.answers?s.accuracy+'% ('+s.correct+'/'+s.answers+')':'')));
+      add(r,el('strong',null,s.name),bar,lab); sk.appendChild(r);
+    });
+    app.appendChild(sk);
+    if(p.focus){ const tip=el('div','card tip'); add(tip,el('h2',null,'💡 Practice tip: '+p.focus.skill),el('p',null,p.focus.tip)); app.appendChild(tip); }
+    if(p.days.length){
+      const dc=el('div','card'); add(dc,el('h2',null,'My last days'),el('div','muted','Each bar is a day you played. Height = questions, colour = how many you got right.'));
+      const wrap=el('div','days'); const max=Math.max(...p.days.map(d=>d.answers),1);
+      p.days.forEach(d=>{ const c=el('div','day'); const col=el('div','col'); col.style.height=Math.max(4,Math.round(110*d.answers/max))+'px'; col.style.background=colorFor(d.accuracy);
+        add(c,el('b',null,d.accuracy===null?'':d.accuracy+'%'),col,el('div',null,d.answers+' q'),el('div',null,d.label)); wrap.appendChild(c); });
+      dc.appendChild(wrap); app.appendChild(dc);
+    }
+    const bd=el('div','card'); const got=p.badges.filter(x=>x.earned).length;
+    add(bd,el('h2',null,'My badges ('+got+' of '+p.badges.length+')'));
+    const bg=el('div','badges');
+    p.badges.forEach(x=>{ const c=el('div','badge '+(x.earned?'on':'off')); const tx=el('div');
+      add(tx,el('div','tt',x.title),el('div','ds',x.desc),x.earned?null:el('div','pg',x.progress)); add(c,el('div','ic',x.icon),tx); bg.appendChild(c); });
+    bd.appendChild(bg); app.appendChild(bd);
+    if(p.review.length){
+      const rv=el('div','card'); add(rv,el('h2',null,'Questions to try again'),el('div','muted','These were tricky. Think about them, then ask your teacher or play again!'));
+      const ul=el('ul','rev'); p.review.forEach(r=>{ const li=el('li'); add(li,el('strong',null,r.skill+': '),document.createTextNode(r.question+(r.timedOut?' (time ran out)':''))); ul.appendChild(li); });
+      rv.appendChild(ul); app.appendChild(rv);
+    }
+  }
+  load();
+})();
+</script>
+</body>
+</html>
